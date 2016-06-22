@@ -14,8 +14,11 @@ public:
 	int init(Graphics &gfx, std::string &filepath, int srcX, int srcY, int width, int height, float posX, float posY);
 	virtual void update();
 	int addToGfx(Graphics &gfx, int x, int y);
-private:
+protected:
 	SDL_Rect _srcRect;
 	SDL_Texture *_spriteSheet;
 	float _x, _y;
+private:
+	void setSpriteLocation(int srcX, int srcY, int width, int height, float posX, float posY);
+	int getSpriteSheet(Graphics &gfx, std::string &filepath);
 };
