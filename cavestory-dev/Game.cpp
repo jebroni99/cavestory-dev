@@ -29,13 +29,18 @@ void Game::start() {
 
 void Game::draw(Graphics &gfx) {
 	gfx.clear();
-	_player.addToGfx(gfx, 100, 100);
+	int errCode = 0;
+	//TODO: maybe exit game from here?
+	if ((errCode = _player.addToGfx(gfx, 100, 100))) {
+		showPopup(errCode);
+	}
 	gfx.updateScreen();
 }
 
 void Game::update(float elapsedTime) {
 	float diff = maxFrameTime - elapsedTime;
 	_sleep(diff);
+	_player.update(maxFrameTime);
 }
 
 void Game::gameLoop() {
@@ -48,12 +53,15 @@ void Game::gameLoop() {
 		showPopup(errCode);
 		return;
 	}
-	_player = Sprite();
+	_player = AnimatedSprite(100);
 	std::string s = "C:/Users/PC/Documents/GitHub/cavestory-dev/data/MyChar.png";
 	if ((errCode = _player.init(gfx, s, 0, 0, 16, 16, 100, 100))) {
 		showPopup(errCode);
 		return;
 	}
+	_player.setAnimations();
+	std::string aniName = "run left";
+	_player.runAnimation(aniName);
 
 	int lastUpdTime = SDL_GetTicks();
 	while (true) {
@@ -74,8 +82,8 @@ void Game::gameLoop() {
 		if (input.wasKeyPressed(SDL_SCANCODE_ESCAPE)) {
 			return;
 		}
-		const int currTime = SDL_GetTicks();
-		const int elapsedTime = currTime - lastUpdTime;
+		int currTime = SDL_GetTicks();
+		int elapsedTime = currTime - lastUpdTime;
 		update(std::min(elapsedTime, maxFrameTime));
 		lastUpdTime = currTime;
 
