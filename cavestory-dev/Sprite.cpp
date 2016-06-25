@@ -6,26 +6,25 @@ Sprite::Sprite() {
 	//
 }
 
+Sprite::Sprite(std::string &filepath, int srcX, int srcY, int width, int height, float posX, float posY) :
+_filepath(filepath),
+_x(posX),
+_y(posY),
+_srcRect({srcX, srcY, width, height})
+{
+	//
+}
+
 Sprite::~Sprite() {
 	//
 }
 
-int Sprite::init(Graphics &gfx, std::string &filepath, int srcX, int srcY, int width, int height, float posX, float posY) {
-	setSpriteLocation(srcX, srcY, width, height, posX, posY);
-	return getSpriteSheet(gfx, filepath);
+int Sprite::init(Graphics &gfx) {
+	return getSpriteSheet(gfx);
 }
 
-void Sprite::setSpriteLocation(int srcX, int srcY, int width, int height, float posX, float posY) {
-	_x = posX;
-	_y = posY;
-	_srcRect.x = srcX;
-	_srcRect.y = srcY;
-	_srcRect.w = width;
-	_srcRect.h = height;
-}
-
-int Sprite::getSpriteSheet(Graphics &gfx, std::string &filepath) {
-	_spriteSheet = SDL_CreateTextureFromSurface(gfx.getRenderer(), gfx.loadImage(filepath));
+int Sprite::getSpriteSheet(Graphics &gfx) {
+	_spriteSheet = SDL_CreateTextureFromSurface(gfx.getRenderer(), gfx.loadImage(_filepath));
 	if (_spriteSheet == NULL)
 		return 1;
 

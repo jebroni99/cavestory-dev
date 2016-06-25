@@ -52,13 +52,11 @@ void Game::gameLoop() {
 		showPopup(errCode);
 		return;
 	}
-	_player = Player();
-	if ((errCode = _player.init(gfx, 200, 100))) {
+	_player = Player(200, 100);
+	if ((errCode = _player.init(gfx))) {
 		showPopup(errCode);
 		return;
 	}
-	_player.init(gfx, 100, 100);
-	_player.init(gfx, 100, 100);
 
 	int lastUpdTime = SDL_GetTicks();
 	while (true) {

@@ -2,12 +2,18 @@
 #include "Constants.h"
 #include "Graphics.h"
 
-AnimatedSprite::AnimatedSprite() :
+AnimatedSprite::AnimatedSprite() {
+	//
+}
+
+AnimatedSprite::AnimatedSprite(std::string & filepath, int srcX, int srcY, int width, int height, float posX, float posY, float timeToUpd) :
+Sprite(filepath, srcX, srcY, width, height, posX, posY),
 _frameIdx(0),
 _timeElapsed(0),
 _visible(true),
 _currAnimationOnce(false),
-_currAnimation("")
+_currAnimation(""),
+_timeToUpd(timeToUpd)
 {
 	//
 }
@@ -16,9 +22,8 @@ AnimatedSprite::~AnimatedSprite() {
 	//
 }
 
-int AnimatedSprite::init(Graphics &gfx, std::string & filepath, int srcX, int srcY, int width, int height, float posX, float posY, float timeToUpd) {
-	_timeToUpd = timeToUpd;
-	return Sprite::init(gfx, filepath, srcX, srcY, width, height, posX, posY);
+int AnimatedSprite::init(Graphics &gfx) {
+	return Sprite::init(gfx);
 }
 
 void AnimatedSprite::runAnimation(std::string aniName, bool once) {

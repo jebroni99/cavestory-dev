@@ -1,7 +1,12 @@
 #include "Player.h"
 #include "Graphics.h"
 
-Player::Player() : AnimatedSprite(),
+Player::Player() {
+	//
+}
+
+Player::Player(float x, float y) :
+AnimatedSprite(std::string("../data/MyChar.png"), 0, 0, 16, 16, x, y, 100),
 _walkSpeed(0.2f),
 _facing(UP)
 {
@@ -11,11 +16,10 @@ Player::~Player() {
 	//
 }
 
-int Player::init(Graphics &gfx, float x, float y) {
-	std::string s = "../data/MyChar.png";
-	if (gfx.loadImage(s) == NULL)
+int Player::init(Graphics &gfx) {
+	if (gfx.loadImage(_filepath) == NULL)
 		return 1;
-	if (AnimatedSprite::init(gfx, s, 0, 0, 16, 16, x, y, 100) != 0)
+	if (AnimatedSprite::init(gfx) != 0)
 		return 1;
 	setAnimations();
 	std::string aniName = "run right";

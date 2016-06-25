@@ -8,9 +8,10 @@ class Graphics;
 class Player : public AnimatedSprite {
 public:
 	Player();
+	Player(float x, float y);
 	~Player();
 
-	virtual int init(Graphics &gfx, float x, float y);
+	virtual int init(Graphics &gfx);
 	virtual void setAnimations();
 	virtual void animationDone();
 	virtual void update(float elapsedTime);

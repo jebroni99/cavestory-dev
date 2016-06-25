@@ -10,9 +10,10 @@ class Graphics;
 class AnimatedSprite : public Sprite {
 public:
 	AnimatedSprite();
+	AnimatedSprite(std::string & filepath, int srcX, int srcY, int width, int height, float posX, float posY, float timeToUpd);
 	virtual ~AnimatedSprite();
 
-	virtual int init(Graphics &gfx, std::string &filepath, int srcX, int srcY, int width, int height, float posX, float posY, float timeToUpd);
+	virtual int init(Graphics &gfx);
 	void runAnimation(std::string aniName, bool once = false);
 	virtual void update(float elapsedTime);
 	virtual int addToGfx(Graphics &gfx, int x, int y);
