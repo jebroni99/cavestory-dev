@@ -6,6 +6,13 @@ namespace constants {
 	const int scale = 4;
 }
 
+enum Direction {
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN
+};
+
 struct Vector2 {
 	int x, y;
 	Vector2() :

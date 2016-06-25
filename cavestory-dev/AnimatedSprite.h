@@ -10,14 +10,13 @@ class Graphics;
 class AnimatedSprite : public Sprite {
 public:
 	AnimatedSprite();
-	AnimatedSprite(float timeToUpd);
 	virtual ~AnimatedSprite();
 
+	virtual int init(Graphics &gfx, std::string &filepath, int srcX, int srcY, int width, int height, float posX, float posY, float timeToUpd);
 	void runAnimation(std::string aniName, bool once = false);
-	void update(float elapsedTime);
-	int addToGfx(Graphics &gfx, int x, int y);
+	virtual void update(float elapsedTime);
+	virtual int addToGfx(Graphics &gfx, int x, int y);
 
-	virtual void setAnimations();
 private:
 	std::unordered_map<std::string, std::vector<SDL_Rect>> _animations;
 	std::unordered_map<std::string, Point> _offsets;
@@ -33,5 +32,6 @@ protected:
 	void resetAnimations();
 	void stopAnimation();
 	void setVisible(bool visible);
-	virtual void animationDone();
+	virtual void animationDone() = 0;
+	virtual void setAnimations() = 0;
 };

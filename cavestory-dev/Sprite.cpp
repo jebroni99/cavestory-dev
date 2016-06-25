@@ -32,10 +32,6 @@ int Sprite::getSpriteSheet(Graphics &gfx, std::string &filepath) {
 	return 0;
 }
 
-void Sprite::update() {
-	//
-}
-
 int Sprite::addToGfx(Graphics &gfx, int x, int y) {
 	SDL_Rect destRect = {x, y, _srcRect.w * constants::scale, _srcRect.h * constants::scale};
 	return gfx.placeSprite(_spriteSheet, &_srcRect, &destRect);

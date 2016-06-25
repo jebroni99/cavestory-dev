@@ -5,7 +5,7 @@
 #include <algorithm>
 
 const int fps = 50;
-const int maxFrameTime = 5000 / fps;
+const int maxFrameTime = 1000 / fps;
 
 Game::Game() {
 }
@@ -30,8 +30,7 @@ void Game::start() {
 void Game::draw(Graphics &gfx) {
 	gfx.clear();
 	int errCode = 0;
-	//TODO: maybe exit game from here?
-	if ((errCode = _player.addToGfx(gfx, 100, 100))) {
+	if ((errCode = _player.addToGfx(gfx))) {
 		showPopup(errCode);
 	}
 	gfx.updateScreen();
@@ -53,15 +52,13 @@ void Game::gameLoop() {
 		showPopup(errCode);
 		return;
 	}
-	_player = AnimatedSprite(100);
-	std::string s = "C:/Users/PC/Documents/GitHub/cavestory-dev/data/MyChar.png";
-	if ((errCode = _player.init(gfx, s, 0, 0, 16, 16, 100, 100))) {
+	_player = Player();
+	if ((errCode = _player.init(gfx, 200, 100))) {
 		showPopup(errCode);
 		return;
 	}
-	_player.setAnimations();
-	std::string aniName = "run left";
-	_player.runAnimation(aniName);
+	_player.init(gfx, 100, 100);
+	_player.init(gfx, 100, 100);
 
 	int lastUpdTime = SDL_GetTicks();
 	while (true) {
@@ -81,6 +78,15 @@ void Game::gameLoop() {
 		}
 		if (input.wasKeyPressed(SDL_SCANCODE_ESCAPE)) {
 			return;
+		}
+		if (input.isHeld(SDL_SCANCODE_LEFT)) {
+			_player.moveLeft();
+		}
+		if (input.isHeld(SDL_SCANCODE_RIGHT)) {
+			_player.moveRight();
+		}
+		if (!input.isHeld(SDL_SCANCODE_LEFT) && !input.isHeld(SDL_SCANCODE_RIGHT)) {
+			_player.stopMoving();
 		}
 		int currTime = SDL_GetTicks();
 		int elapsedTime = currTime - lastUpdTime;

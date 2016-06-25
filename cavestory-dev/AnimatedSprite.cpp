@@ -2,14 +2,9 @@
 #include "Constants.h"
 #include "Graphics.h"
 
-AnimatedSprite::AnimatedSprite() {
-	//
-}
-
-AnimatedSprite::AnimatedSprite(float timeToUpd) :
+AnimatedSprite::AnimatedSprite() :
 _frameIdx(0),
 _timeElapsed(0),
-_timeToUpd(timeToUpd),
 _visible(true),
 _currAnimationOnce(false),
 _currAnimation("")
@@ -21,6 +16,11 @@ AnimatedSprite::~AnimatedSprite() {
 	//
 }
 
+int AnimatedSprite::init(Graphics &gfx, std::string & filepath, int srcX, int srcY, int width, int height, float posX, float posY, float timeToUpd) {
+	_timeToUpd = timeToUpd;
+	return Sprite::init(gfx, filepath, srcX, srcY, width, height, posX, posY);
+}
+
 void AnimatedSprite::runAnimation(std::string aniName, bool once) {
 	_currAnimationOnce = once;
 	if (_currAnimation != aniName) {
@@ -30,8 +30,6 @@ void AnimatedSprite::runAnimation(std::string aniName, bool once) {
 }
 
 void AnimatedSprite::update(float elapsedTime) {
-	Sprite::update();
-
 	_timeElapsed += elapsedTime;
 	if (_timeElapsed >= _timeToUpd) {
 		_timeElapsed = 0;
@@ -55,16 +53,9 @@ int AnimatedSprite::addToGfx(Graphics &gfx, int x, int y) {
 	return gfx.placeSprite(_spriteSheet, &currRect, &destRect);
 }
 
-void AnimatedSprite::setAnimations() {
-	std::string s = "run left";
-	addAnimation(3, 0, 0, s, 16, 16, Point(0, 0));
-}
-
 void AnimatedSprite::addAnimation(int frames, int x, int y, std::string &name, int width, int height, Point offset) {
 	
-	if (_animations.count(name) == 0) {
-		_animations[name] = {};
-	}
+	_animations[name] = {};
 	
 	int i;
 	for (i = 0; i < frames; i++) {
@@ -86,8 +77,4 @@ void AnimatedSprite::stopAnimation() {
 
 void AnimatedSprite::setVisible(bool visible) {
 	_visible = visible;
-}
-
-void AnimatedSprite::animationDone() {
-	//
 }
