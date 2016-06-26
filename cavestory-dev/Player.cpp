@@ -28,14 +28,10 @@ int Player::init(Graphics &gfx) {
 }
 
 void Player::setAnimations() {
-	std::string s = "run left";
-	addAnimation(3, 0, 0, s, 16, 16, Point(0, 0));
-	s = "run right";
-	addAnimation(3, 0, 16, s, 16, 16, Point(0, 0));
-	s = "idle left";
-	addAnimation(1, 0, 0, s, 16, 16, Point(0, 0));
-	s = "idle right";
-	addAnimation(1, 0, 16, s, 16, 16, Point(0, 0));
+	addAnimation(3, 0, 0, std::string("run left"), 16, 16, Point(0, 0));
+	addAnimation(3, 0, 16, std::string("run right"), 16, 16, Point(0, 0));
+	addAnimation(1, 0, 0, std::string("idle left"), 16, 16, Point(0, 0));
+	addAnimation(1, 0, 16, std::string("idle right"), 16, 16, Point(0, 0));
 }
 
 void Player::animationDone() {

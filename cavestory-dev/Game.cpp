@@ -2,6 +2,7 @@
 #include "Graphics.h"
 #include "SDL.h"
 #include "Input.h"
+#include "Level.h"
 #include <algorithm>
 
 const int fps = 50;
@@ -30,6 +31,9 @@ void Game::start() {
 void Game::draw(Graphics &gfx) {
 	gfx.clear();
 	int errCode = 0;
+	if ((errCode = _level.addToGfx(gfx))) {
+		showPopup(errCode);
+	}
 	if ((errCode = _player.addToGfx(gfx))) {
 		showPopup(errCode);
 	}
@@ -40,6 +44,7 @@ void Game::update(float elapsedTime) {
 	float diff = maxFrameTime - elapsedTime;
 	_sleep(diff);
 	_player.update(maxFrameTime);
+	_level.update(maxFrameTime);
 }
 
 void Game::gameLoop() {
@@ -56,6 +61,11 @@ void Game::gameLoop() {
 	if ((errCode = _player.init(gfx))) {
 		showPopup(errCode);
 		return;
+	}
+
+	_level = Level(std::string("map 1"), Point(100,100));
+	if ((errCode = _level.init(gfx))) {
+		showPopup(errCode);
 	}
 
 	int lastUpdTime = SDL_GetTicks();
