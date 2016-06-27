@@ -1,6 +1,7 @@
 #include "Level.h"
 #include "Graphics.h"
 #include "SDL.h"
+#include "Constants.h"
 
 Level::Level() {
 }
@@ -8,7 +9,7 @@ Level::Level() {
 Level::Level(std::string & mapName, Point spawnPoint) :
 _mapName(mapName),
 _spawnPoint(spawnPoint),
-_size(Point(1280, 960))
+_size(Point(constants::screenWidth, constants::screenHeight))
 {
 }
 
@@ -30,7 +31,7 @@ int Level::addToGfx(Graphics &gfx) {
 	for (x = 0; x * 64 < _size._x; x++) {
 		int y;
 		for (y = 0; y * 64 < _size._y; y++) {
-			destRect = {x*64, y*64, 64, 64};
+			destRect = {x*64 * constants::scale, y*64 * constants::scale, 64 * constants::scale, 64 * constants::scale };
 			if (gfx.placeSprite(_bgTexture, &srcRect, &destRect))
 				return 1;
 		}
