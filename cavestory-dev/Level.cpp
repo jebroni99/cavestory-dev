@@ -27,6 +27,23 @@ int Level::init(Graphics &gfx) {
 void Level::update(float elapsedTime) {
 }
 
+std::vector<Rectangle> Level::checkTileCollisions(Rectangle &other) {
+	std::vector<Rectangle> ret;
+	int i;
+	int colRectSize = _colRects.size();
+	
+	for (i = 0; i < colRectSize; i++) {
+		if (_colRects.at(i).collidesWith(other)) {
+			ret.push_back(_colRects.at(i));
+		}
+	}
+	return ret;
+}
+
+Point Level::getPlayerSpawnPoint() {
+	return _spawnPoint;
+}
+
 int Level::addToGfx(Graphics &gfx) {
 	int i;
 	int tileListSize = _tileList.size();
@@ -61,6 +78,20 @@ int Level::loadMap(std::string mapName, Graphics &gfx) {
 		}
 		layerNode = layerNode->NextSiblingElement("layer");
 	}
+
+	XMLElement *objectGroupNode = mapNode->FirstChildElement("objectgroup");
+	while (objectGroupNode) {
+		const char *name = objectGroupNode->Attribute("name");
+		if (strcmp(name, "collisions") == 0) {
+			XMLElement *objectNode = objectGroupNode->FirstChildElement("object");
+			loadCollisionRects(objectNode);
+		} else if(strcmp(name, "spawn points") == 0){
+			XMLElement *objectNode = objectGroupNode->FirstChildElement("object");
+			loadSpawnObjects(objectNode);
+		}
+		objectGroupNode = objectGroupNode->NextSiblingElement("objectgroup");
+	}
+	
 	return 0;
 }
 
@@ -146,5 +177,33 @@ void Level::appendToTileList(XMLElement *tileNode) {
 		_tileList.push_back(tile);
 
 		tileNode = tileNode->NextSiblingElement("tile");
+	}
+}
+
+void Level::loadCollisionRects(XMLElement *objectNode) {
+	while (objectNode) {
+		float x, y;
+		float width, height;
+		objectNode->QueryFloatAttribute("x", &x);
+		objectNode->QueryFloatAttribute("y", &y);
+		objectNode->QueryFloatAttribute("width", &width);
+		objectNode->QueryFloatAttribute("height", &height);
+		_colRects.push_back(Rectangle(x * constants::scale, y * constants::scale, width * constants::scale, height * constants::scale));
+		objectNode = objectNode->NextSiblingElement("object");
+	}
+}
+
+void Level::loadSpawnObjects(XMLElement *objectNode) {
+	while (objectNode) {
+		float x, y;
+		const char *name;
+		objectNode->QueryFloatAttribute("x", &x);
+		objectNode->QueryFloatAttribute("y", &y);
+		name = objectNode->Attribute("name");
+		if (strcmp(name, "player") == 0) {
+			_spawnPoint = Point(x * constants::scale, y * constants::scale);
+		}
+
+		objectNode = objectNode->NextSiblingElement("object");
 	}
 }

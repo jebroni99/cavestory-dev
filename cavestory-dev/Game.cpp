@@ -45,6 +45,11 @@ void Game::update(float elapsedTime) {
 	_sleep(diff);
 	_player.update(maxFrameTime);
 	_level.update(maxFrameTime);
+
+	std::vector<Rectangle> others = _level.checkTileCollisions(_player.getBoundingBox());
+	if (others.size() > 0) {
+		_player.handleTileCollisions(others);
+	}
 }
 
 void Game::gameLoop() {
@@ -57,15 +62,15 @@ void Game::gameLoop() {
 		showPopup(errCode);
 		return;
 	}
-	_player = Player(200, 100);
-	if ((errCode = _player.init(gfx))) {
-		showPopup(errCode);
-		return;
-	}
 
 	_level = Level(std::string("map 1"), Point(100,100));
 	if ((errCode = _level.init(gfx))) {
 		showPopup(errCode);
+	}
+	_player = Player(_level.getPlayerSpawnPoint());
+	if ((errCode = _player.init(gfx))) {
+		showPopup(errCode);
+		return;
 	}
 
 	int lastUpdTime = SDL_GetTicks();

@@ -1,8 +1,18 @@
-﻿  Level.cpp
+﻿  Game.cpp
+Game.cpp(45): warning C4244: 'argument': conversion from 'float' to 'unsigned long', possible loss of data
+Game.cpp(46): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+Game.cpp(47): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+Game.cpp(45): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdlib.h(1266): note: see declaration of '_sleep'
+Game.cpp(106): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+  Level.cpp
+Level.cpp(191): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+Level.cpp(204): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  main.cpp
   Generating code
-  4 of 1867 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    12 functions had inline decision re-evaluated but remain unchanged
+  4 of 1975 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   cavestory-dev.vcxproj -> C:\Users\PC\Documents\GitHub\cavestory-dev\Release\cavestory-dev.exe
   cavestory-dev.vcxproj -> C:\Users\PC\Documents\GitHub\cavestory-dev\Release\cavestory-dev.pdb (Full PDB)

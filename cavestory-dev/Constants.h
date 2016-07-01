@@ -6,6 +6,15 @@ namespace constants {
 	const int scale = 2;
 }
 
+namespace sides {
+	enum Side {
+		TOP,
+		LEFT,
+		BOTTOM,
+		RIGHT
+	};
+}
+
 enum Direction {
 	LEFT,
 	RIGHT,

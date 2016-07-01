@@ -1,14 +1,21 @@
 #include "Player.h"
 #include "Graphics.h"
+#include <algorithm>
+#include "Rectangle.h"
 
 Player::Player() {
 	//
 }
 
-Player::Player(float x, float y) :
-AnimatedSprite(std::string("../data/MyChar.png"), 0, 0, 16, 16, x, y, 100),
+Player::Player(Point spawnPoint) :
+AnimatedSprite(std::string("../data/MyChar.png"), 0, 0, 16, 16, spawnPoint._x, spawnPoint._y, 100),
 _walkSpeed(0.2f),
-_facing(UP)
+_facing(RIGHT),
+_grounded(false),
+_gravity(0.002f),
+_maxGravity(0.8f),
+_dx(0),
+_dy(0)
 {
 }
 
@@ -39,6 +46,11 @@ void Player::animationDone() {
 }
 
 void Player::update(float elapsedTime) {
+	if (_dy <= _maxGravity) {
+		_dy = std::min(_dy + elapsedTime * _gravity, _maxGravity);
+	}
+
+	_y += _dy * elapsedTime;
 	_x += _dx * elapsedTime;
 	AnimatedSprite::update(elapsedTime);
 }
@@ -69,4 +81,38 @@ void Player::stopMoving() {
 		runAnimation("idle left");
 	else
 		runAnimation("idle right");
+}
+
+const float Player::getX() const {
+	return _x;
+}
+
+const float Player::getY() const {
+	return _y;
+}
+
+void Player::handleTileCollisions(std::vector<Rectangle> &others) {
+	int otherSize = others.size();
+	int i;
+	for (i = 0; i < otherSize; i++) {
+		sides::Side colSide = getCollisionSide(others.at(i));
+		switch (colSide){
+		case sides::TOP:
+			_y = others.at(i).getBottom() + 1;
+			_dy = 0;
+			break;
+		case sides::LEFT:
+			_x = others.at(i).getRight() + 1;
+			_dx = 0;
+			break;
+		case sides::BOTTOM:
+			_y = others.at(i).getTop() - getBoundingBox().getHeight() - 1;
+			_dy = 0;
+			_grounded = true;
+			break;
+		case sides::RIGHT:
+			_x = others.at(i).getLeft() - getBoundingBox().getWidth() - 1;
+			break;
+		}
+	}
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="16" tilewidth="16" tileheight="16" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="16" tilewidth="16" tileheight="16" nextobjectid="35">
  <tileset firstgid="1" name="PrtCave" tilewidth="16" tileheight="16" tilecount="80" columns="16">
   <image source="tilesets/PrtCave.png" width="256" height="80"/>
  </tileset>
@@ -651,4 +651,30 @@
    <tile gid="0"/>
   </data>
  </layer>
+ <objectgroup name="collisions">
+  <object id="7" x="112.5" y="79" width="79" height="16"/>
+  <object id="8" x="128.5" y="144" width="46" height="14"/>
+  <object id="9" x="193" y="144" width="14.5" height="15.5"/>
+  <object id="10" x="208.5" y="127.5" width="29.5" height="15"/>
+  <object id="11" x="64.3333" y="46.6667" width="15" height="89.3333"/>
+  <object id="12" x="48.6667" y="127.667" width="62" height="17"/>
+  <object id="17" x="96.3333" y="128.667" width="15.3333" height="78.6667"/>
+  <object id="18" x="99.6667" y="191.333" width="124.667" height="16.3333"/>
+  <object id="19" x="193.333" y="176" width="30.3333" height="14.3333"/>
+  <object id="20" x="207.667" y="159.333" width="16" height="16.3333"/>
+  <object id="24" x="238.667" y="96" width="18.3333" height="46.6667"/>
+  <object id="25" x="224.333" y="80.6667" width="34.6667" height="15.3333"/>
+  <object id="26" x="192" y="72.6667" width="32" height="15"/>
+  <object id="27" x="144" y="64" width="50.3333" height="17.6667"/>
+  <object id="28" x="144.333" y="16.6667" width="50.3333" height="14.6667"/>
+  <object id="29" x="176.333" y="17.6667" width="16" height="50"/>
+  <object id="30" x="55" y="31.3333" width="56" height="17"/>
+  <object id="31" x="89" y="16" width="36" height="16.3333"/>
+  <object id="32" x="118.667" y="12" width="25.6667" height="15"/>
+ </objectgroup>
+ <objectgroup name="spawn points">
+  <object id="33" name="player" x="91.5" y="83.5" width="6" height="6.5">
+   <ellipse/>
+  </object>
+ </objectgroup>
 </map>

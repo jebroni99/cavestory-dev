@@ -35,6 +35,8 @@ void AnimatedSprite::runAnimation(std::string aniName, bool once) {
 }
 
 void AnimatedSprite::update(float elapsedTime) {
+	Sprite::update(elapsedTime);
+
 	_timeElapsed += elapsedTime;
 	if (_timeElapsed >= _timeToUpd) {
 		_timeElapsed = 0;

@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "Tile.h"
 #include "tinyxml2.h"
+#include "Rectangle.h"
 
 class Graphics;
 struct SDL_Rect;
@@ -22,6 +23,8 @@ public:
 	int init(Graphics & gfx);
 	void update(float elapsedTime);
 	int addToGfx(Graphics &gfx);
+	std::vector<Rectangle> checkTileCollisions(Rectangle &other);
+	Point getPlayerSpawnPoint();
 
 private:
 	std::string _mapName;
@@ -36,10 +39,12 @@ private:
 	void setSizes(XMLElement *mapNode);
 	int loadTileSets(XMLElement *tileSetNode, Graphics &gfx);
 	void appendToTileList(XMLElement *tileNode);
+	void loadCollisionRects(XMLElement *objectNode);
+	void loadSpawnObjects(XMLElement * objectNode);
 
 	std::vector<Tile> _tileList;
 	std::vector<TileSet> _tileSets;
-	std::vector<SDL_Rect> _colRects;
+	std::vector<Rectangle> _colRects;
 };
 
 struct TileSet {

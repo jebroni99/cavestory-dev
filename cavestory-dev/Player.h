@@ -4,11 +4,12 @@
 #include "Constants.h"
 
 class Graphics;
+class Rectangle;
 
 class Player : public AnimatedSprite {
 public:
 	Player();
-	Player(float x, float y);
+	Player(Point spawnPoint);
 	~Player();
 
 	virtual int init(Graphics &gfx);
@@ -20,8 +21,16 @@ public:
 	void moveLeft();
 	void moveRight();
 	void stopMoving();
+
+	const float getX() const;
+	const float getY() const;
+
+	void handleTileCollisions(std::vector<Rectangle> &others);
 private:
 	float _dx, _dy;
 	Direction _facing;
 	float _walkSpeed;
+	float _gravity;
+	float _maxGravity;
+	bool _grounded;
 };
